@@ -7,6 +7,9 @@ const seed=require("./config/seed")
 const cors = require("cors");
 const path = require('path');
 require("dotenv").config();
+const userRoutes = require('./routes/UserRoutes');
+const adminRoutes = require('./routes/AdminRoutes');
+
 
 // Use this *before* defining any routes
 app.use(cors());
@@ -19,8 +22,11 @@ app.use(express.urlencoded({ extended: true })); // For x-www-form-urlencoded
 
 
 // Use relative path for mounting your API routes (NO full URLs)
-app.use('/api', apiRoutes);
-app.use('/api',apiRoutes);
+
+
+// Mount them under appropriate base path
+app.use('/user', userRoutes);   // e.g. /user/register
+app.use('/admin', adminRoutes); // e.g. /admin/allFeedback
 
 // Default route to test server is working
 app.get('/', (req, res) => {

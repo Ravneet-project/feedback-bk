@@ -1,40 +1,40 @@
-// routes/apiRoutes.js
-const express = require('express');
-const router  = express.Router();
+// // routes/apiRoutes.js
+// const express = require('express');
+// const router  = express.Router();
 
-const FeedbackController = require('../server/Feedback/FeedbackController');
-const UserController = require('../server/User/UserController');
-const CustomerController = require('../server/Customer/CustomerController');
-const AnalyticsController = require('../server/Analytics/AnalyticsController');
-
-
-
-const verifyToken = require("../config/middleware");
-
-// Feedback routes
-router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
-router.post("/allFeedback", FeedbackController.allFeedback);
-router.post("/changeStatusFeedback", FeedbackController.changeStatusFeedback);
-router.get("/getSingleFeedback/:id", FeedbackController.getSingleFeedback);
-/// export
-// Feedback export (Excel & PDF)
-router.get("/export-feedback-pdf/:userId", FeedbackController.exportUserSpecificFeedbackPDF);
-
-//admin  reply
+// const FeedbackController = require('../server/Feedback/FeedbackController');
+// const UserController = require('../server/User/UserController');
+// const CustomerController = require('../server/Customer/CustomerController');
+// const AnalyticsController = require('../server/Analytics/AnalyticsController');
 
 
 
-// Customer routes
-router.post('/register', CustomerController.register);
-router.post('/allcustomer', CustomerController.allcustomer);
-router.post('/getSinglecustomer', CustomerController.getSinglecustomer);
-router.post('/feedback/update', CustomerController.update);
-router.post('/feedback/changeStatus', CustomerController.changeStatus);
+// const verifyToken = require("../config/middleware");
 
-// User login
-router.post('/login', UserController.login);
+// // Feedback routes
+// router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
+// router.post("/allFeedback", FeedbackController.allFeedback);
+// router.post("/changeStatusFeedback", FeedbackController.changeStatusFeedback);
+// router.get("/getSingleFeedback/:id", FeedbackController.getSingleFeedback);
+// /// export
+// // Feedback export (Excel & PDF)
+// router.get("/export-feedback-pdf/:userId", FeedbackController.exportUserSpecificFeedbackPDF);
 
-// Analytics
-router.post("/feedback/stats", AnalyticsController.getFeedbackStats);
+// //admin  reply
 
-module.exports = router;
+
+
+// // Customer routes
+// router.post('/register', CustomerController.register);
+// router.post('/allcustomer', CustomerController.allcustomer);
+// router.post('/getSinglecustomer', CustomerController.getSinglecustomer);
+// router.post('/feedback/update', CustomerController.update);
+// router.post('/feedback/changeStatus', CustomerController.changeStatus);
+
+// // User login
+// router.post('/login', UserController.login);
+
+// // Analytics
+// router.post("/feedback/stats", AnalyticsController.getFeedbackStats);
+
+// module.exports = router;
