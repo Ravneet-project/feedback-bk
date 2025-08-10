@@ -8,7 +8,8 @@ const cors = require("cors");
 const path = require('path');
 require("dotenv").config();
 const userRoutes = require('./routes/UserRoutes');
-const adminRoutes = require('./routes/AdminRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
 
 
 // Use this *before* defining any routes
