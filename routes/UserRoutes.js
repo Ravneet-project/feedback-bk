@@ -1,20 +1,33 @@
 // routes/userRoutes.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const UserController = require('../server/User/UserController');
-const CustomerController = require('../server/Customer/CustomerController');
-const FeedbackController = require('../server/Feedback/FeedbackController');
+// Controllers
+const UserController = require("../server/User/UserController");
+const CustomerController = require("../server/Customer/CustomerController");
+const FeedbackController = require("../server/Feedback/FeedbackController");
+
+// Middleware
 const verifyToken = require("../config/middleware");
 
-// Auth
-router.post('/register', CustomerController.register);
-router.post('/login', UserController.login);
+// ====================== AUTH ROUTES ======================
 
-// User-side Feedback
-router.post('/addFeedback', verifyToken, FeedbackController.addFeedback);
+// Register a new customer
+router.post("/register", CustomerController.register);
 
-// User can export their own report
-router.get("/export-feedback-pdf/:userId", verifyToken, FeedbackController.exportUserSpecificFeedbackPDF);
+// Login user
+router.post("/login", UserController.login);
+
+// ====================== USER FEEDBACK ROUTES ======================
+
+// Add feedback (only for logged-in users)
+router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
+
+// Export logged-in user's feedback report as PDF
+router.get(
+  "/export-feedback-pdf/:userId",
+  verifyToken,
+  FeedbackController.exportUserSpecificFeedbackPDF
+);
 
 module.exports = router;

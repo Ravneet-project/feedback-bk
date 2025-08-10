@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-mongoose.connect("mongodb+srv://neettkaur123:123@cluster0.0k93tzy.mongodb.net/feedback")
+mongoose.connect("mongodb://localhost:27017/feedback")
 .then(()=>{
     console.log("Database connected");
 })
