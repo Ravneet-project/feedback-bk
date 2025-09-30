@@ -62,5 +62,65 @@ const login = (req, res) => {
   });
 };
 
+const changePassword = async (req, res) => {
+  try {
+    let validation = [];
 
-module.exports = { login };
+    if (!req.body.oldPassword) validation.push("Old Password is required");
+    if (!req.body.newPassword) validation.push("New Password is required");
+    if (!req.body.confirmPassword) validation.push("Confirm Password is required");
+
+    if (validation.length > 0) {
+      return res.status(422).json({
+        success: false,
+        message: validation
+      });
+    }
+
+    // ✅ JWT middleware se req.decoded._id aa raha hoga
+    const userId = req.decoded._id;
+
+    const userData = await userModel.findById(userId);
+    if (!userData) {
+      return res.status(404).json({
+        success: false,
+        message: "No user found!"
+      });
+    }
+
+    // ✅ check confirmPassword === newPassword
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New password and confirm password do not match"
+      });
+    }
+
+    // ✅ check oldPassword correct hai ya nahi
+    const isMatch = await bcrypt.compare(req.body.oldPassword, userData.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Old password is incorrect"
+      });
+    }
+
+    // ✅ update with new hashed password
+    userData.password = await bcrypt.hash(req.body.newPassword, 10);
+    await userData.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password changed successfully"
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong"
+    });
+  }
+};
+
+module.exports = { login, changePassword };

@@ -26,9 +26,13 @@ app.use(express.urlencoded({ extended: true })); // For x-www-form-urlencoded
 
 
 // Mount them under appropriate base path
-app.use('/user', userRoutes);   // e.g. /user/register
-app.use('/admin', adminRoutes); // e.g. /admin/allFeedback
 
+app.use("/api", userRoutes);
+
+
+
+// Badal do
+app.use('/api', adminRoutes);
 // Default route to test server is working
 app.get('/', (req, res) => {
   res.send('Server is running');

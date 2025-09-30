@@ -11,12 +11,13 @@ const verifyToken = require("../config/middleware");
 router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
 router.post("/allFeedback", verifyToken, FeedbackController.allFeedback);
 router.post("/changeStatusFeedback", verifyToken, FeedbackController.changeStatusFeedback);
-router.get("/getSingleFeedback/:id", verifyToken, FeedbackController.getSingleFeedback);
+router.get("/admin/getSingleFeedback/:id", verifyToken, FeedbackController.getSingleFeedback);
 router.get("/export-feedback-pdf/:userId", verifyToken, FeedbackController.exportUserSpecificFeedbackPDF);
 
 // Customer routes (admin-side management)
 router.post('/allcustomer', verifyToken, CustomerController.allcustomer);
-router.post('/getSinglecustomer', verifyToken, CustomerController.getSinglecustomer);
+router.post("/admin/getSinglecustomer", verifyToken, CustomerController.getSinglecustomer);
+
 router.post('/feedback/update', verifyToken, CustomerController.update);
 router.post('/feedback/changeStatus', verifyToken, CustomerController.changeStatus);
 
