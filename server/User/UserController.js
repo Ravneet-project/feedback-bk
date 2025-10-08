@@ -77,8 +77,8 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // ✅ JWT middleware se req.decoded._id aa raha hoga
-    const userId = req.decoded._id;
+    // ✅ Fix: get user id from req.user
+    const userId = req.user._id;
 
     const userData = await userModel.findById(userId);
     if (!userData) {
@@ -88,7 +88,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // ✅ check confirmPassword === newPassword
     if (req.body.newPassword !== req.body.confirmPassword) {
       return res.status(400).json({
         success: false,
@@ -96,7 +95,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // ✅ check oldPassword correct hai ya nahi
     const isMatch = await bcrypt.compare(req.body.oldPassword, userData.password);
     if (!isMatch) {
       return res.status(401).json({
@@ -105,7 +103,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // ✅ update with new hashed password
     userData.password = await bcrypt.hash(req.body.newPassword, 10);
     await userData.save();
 
@@ -115,12 +112,14 @@ const changePassword = async (req, res) => {
     });
 
   } catch (err) {
-    console.error(err);
+    console.error("Change Password Error:", err);
     return res.status(500).json({
       success: false,
-      message: "Something went wrong"
+      message: "Something went wrong",
+      error: err.message
     });
   }
 };
+
 
 module.exports = { login, changePassword };

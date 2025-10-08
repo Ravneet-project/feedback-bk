@@ -1,7 +1,7 @@
-// routes/adminRoutes.js
 const express = require('express');
 const router = express.Router();
 
+const UserController = require('../server/User/UserController');  // ✅ Add this line
 const FeedbackController = require('../server/Feedback/FeedbackController');
 const CustomerController = require('../server/Customer/CustomerController');
 const AnalyticsController = require('../server/Analytics/AnalyticsController');
@@ -9,6 +9,8 @@ const verifyToken = require("../config/middleware");
 
 // Feedback routes (admin-specific)
 router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
+router.post("/changePassword", verifyToken, UserController.changePassword);  // ✅ added verifyToken for security
+
 router.post("/allFeedback", verifyToken, FeedbackController.allFeedback);
 router.post("/changeStatusFeedback", verifyToken, FeedbackController.changeStatusFeedback);
 router.get("/admin/getSingleFeedback/:id", verifyToken, FeedbackController.getSingleFeedback);

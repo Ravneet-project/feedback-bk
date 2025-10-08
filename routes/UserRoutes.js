@@ -18,10 +18,13 @@ router.post("/register", CustomerController.register);
 // Login user
 router.post("/login", UserController.login);
 
+router.post("/changePassword", verifyToken, UserController.changePassword);
+
 // ====================== USER FEEDBACK ROUTES ======================
 
 // Add feedback (only for logged-in users)
 router.post("/addFeedback", verifyToken, FeedbackController.addFeedback);
+ 
 
 // Export logged-in user's feedback report as PDF
 router.get(
